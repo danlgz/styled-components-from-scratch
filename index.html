@@ -23,24 +23,23 @@
         }
 
         const styled = {}
-        const htmlTags = ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'span']
+        const htmlTags = ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'span', 'button']
         htmlTags.forEach(htmlTag => {
-            styled[htmlTag] = styles => {
-                return children => `
+            styled[htmlTag] = styles => children => `
                     <${htmlTag} style="${styles}">
                         ${children}
                     </${htmlTag}>
                 `
-            }
         })
 
         const props = {
-            message: 'Daniel!!!'
+            message: 'friend',
+            emoji: '😎'
         }
 
         const Message = componentBuilder`
             <h1>
-                <i>Hello ${'message'}<i>
+                Hello ${'message'} ${'emoji'}
             <h1>
         `(props)
 
@@ -52,10 +51,10 @@
             justify-content: center;
             text-align: center;
             height: 100vh;
+            font-size: 2rem;
         `
 
         render(MessageStyled(Message), window.app)
-
     </script>
 </body>
 </html>
