@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎨</text></svg>">
+    <title>Styled Component</title>
+</head>
+<body style="margin: 0; padding: 0;">
+    <div id="app"></div>
+    <script>
+        const render = (component, container) => container.innerHTML = component
+
+        const componentBuilder = (strings, ...values) => {
+            return props => {
+                const newStrings = strings.slice()
+                values.forEach((value, index) => {
+                    newStrings[index] += props[value]
+                })
+
+                return newStrings.join('')
+            }
+        }
+
+        const styled = {}
+        const htmlTags = ['div', 'h1', 'h2', 'h3', 'h4', 'h5', 'span']
+        htmlTags.forEach(htmlTag => {
+            styled[htmlTag] = styles => {
+                return children => `
+                    <${htmlTag} style="${styles}">
+                        ${children}
+                    </${htmlTag}>
+                `
+            }
+        })
+
+        const props = {
+            message: 'Daniel!!!'
+        }
+
+        const Message = componentBuilder`
+            <h1>
+                <i>Hello ${'message'}<i>
+            <h1>
+        `(props)
+
+        MessageStyled = styled.div`
+            color: #679df5;
+            text-shadow: 1px 1px 0 gray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100vh;
+        `
+
+        render(MessageStyled(Message), window.app)
+
+    </script>
+</body>
+</html>
